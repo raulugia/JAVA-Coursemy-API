@@ -7,11 +7,11 @@ import java.util.List;
 public interface TeacherService {
     List<Teacher> getAllTeachers();
 
-    Teacher getById(int id);
+    Teacher getById(long id);
 
     Teacher createTeacher(Teacher teacher);
 
-    Teacher updateTeacher(int id, Teacher teacher);
+    Teacher updateTeacher(long id, Teacher teacher);
 
-    String removeById(int id);
+    String removeById(long id);
 }
