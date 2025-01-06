@@ -5,13 +5,13 @@ import com.coursemy_backend.coursemy.entities.Student;
 import java.util.List;
 
 public interface StudentService {
-    List<Student> getAllTeachers();
+    List<Student> getAllStudents();
 
-    Student getById(int id);
+    Student getById(long id);
 
-    Student createStudent(Student teacher);
+    Student createStudent(Student student);
 
-    Student updateStudent(int id, Student teacher);
+    Student updateStudent(long id, Student student);
 
-    String removeById(int id);
+    String removeById(long id);
 }

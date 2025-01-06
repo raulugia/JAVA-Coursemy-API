@@ -59,6 +59,10 @@ public class Student {
         return this.lastName;
     }
 
+    public void setLastName(String lastName){
+        this.lastName = lastName;
+    }
+
     public String getEmail(){
         return this.email;
     }
