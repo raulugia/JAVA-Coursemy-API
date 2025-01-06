@@ -2,6 +2,9 @@ package com.coursemy_backend.coursemy.entities;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name="course")
 public class Course {
@@ -22,6 +25,14 @@ public class Course {
     @ManyToOne
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
+
+    @ManyToMany()
+    @JoinTable(
+            name="course_student",
+            joinColumns = @JoinColumn(name="student_id"),
+            inverseJoinColumns = @JoinColumn(name="course_id")
+    )
+    private List<Student> students = new ArrayList<>();
 
     public Course(){
 

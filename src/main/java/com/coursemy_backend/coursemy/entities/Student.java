@@ -3,6 +3,9 @@ package com.coursemy_backend.coursemy.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name="student")
 public class Student {
@@ -24,6 +27,9 @@ public class Student {
     public Student(){
 
     }
+
+    @ManyToMany(mappedBy = "students")
+    private List<Course> courses = new ArrayList<>();
 
     public Student(String firstName, String lastName, String email){
         this.firstName = firstName;

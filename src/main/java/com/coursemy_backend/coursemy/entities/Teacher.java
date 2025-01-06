@@ -2,6 +2,7 @@ package com.coursemy_backend.coursemy.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Size;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,16 +16,18 @@ public class Teacher {
     private long id;
 
     @Column(name="first_name")
+    @Size(min = 1, max = 20)
     private String firstName;
 
     @Column(name="last_name")
+    @Size(min = 1, max = 20)
     private String lastName;
 
     @Email
     @Column(name="email")
     private String email;
 
-    @OneToMany(mappedBy = "teacher", fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "teacher", fetch=FetchType.LAZY, cascade={CascadeType.REMOVE})
     private List<Course> courses = new ArrayList<>();
 
     public Teacher(){
