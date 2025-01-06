@@ -2,6 +2,7 @@ package com.coursemy_backend.coursemy.service;
 
 import com.coursemy_backend.coursemy.entities.Student;
 import com.coursemy_backend.coursemy.repository.StudentRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,6 +10,7 @@ import java.util.Optional;
 public class StudentServiceImp implements StudentService{
     private StudentRepository studentRepository;
 
+    @Autowired
     public StudentServiceImp(StudentRepository studentRepository){
         this.studentRepository = studentRepository;
     }

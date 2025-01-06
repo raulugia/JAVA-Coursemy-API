@@ -7,11 +7,11 @@ import java.util.List;
 public interface CourseService {
     List<Course> getAllCourses();
 
-    Course getById(int id);
+    Course getById(long id);
 
     Course createCourse(Course Course);
 
-    Course updateCourse(int id, Course Course);
+    Course updateCourse(long id, Course Course);
 
-    String removeById(int id);
+    String removeById(long id);
 }
