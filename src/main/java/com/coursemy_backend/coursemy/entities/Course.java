@@ -19,6 +19,10 @@ public class Course {
     @Column(name="imageUrl")
     private String imageUrl;
 
+    @ManyToOne
+    @JoinColumn(name = "teacher_id")
+    private Teacher teacher;
+
     public Course(){
 
     }

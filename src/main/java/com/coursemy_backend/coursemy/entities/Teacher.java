@@ -3,6 +3,9 @@ package com.coursemy_backend.coursemy.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name="teacher")
 public class Teacher {
@@ -20,6 +23,9 @@ public class Teacher {
     @Email
     @Column(name="email")
     private String email;
+
+    @OneToMany(mappedBy = "teacher", fetch=FetchType.LAZY)
+    private List<Course> courses = new ArrayList<>();
 
     public Teacher(){
 
