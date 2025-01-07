@@ -1,10 +1,7 @@
 package com.coursemy_backend.coursemy.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +31,15 @@ public class Student {
     @Size(min = 5, max = 254, message = "Email must be between 5 and 254 characters")
     private String email;
 
+    @Column(name = "password")
+    @NotNull(message = "Password is required")
+    @NotEmpty(message = "Password cannot be empty")
+    @Pattern(
+            regexp = "^(?=.*[a-z])(?=.*[A-Z]).{6,20}$",
+            message = "Password must be 6-20 characters long, contain at least one uppercase letter, and at least one lowercase letter"
+    )
+    private String password;
+
     public Student(){
 
     }
@@ -41,10 +47,11 @@ public class Student {
     @ManyToMany(mappedBy = "students")
     private List<Course> courses = new ArrayList<>();
 
-    public Student(String firstName, String lastName, String email){
+    public Student(String firstName, String lastName, String email, String password){
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.password = password;
     }
 
     public String getFirstName() {

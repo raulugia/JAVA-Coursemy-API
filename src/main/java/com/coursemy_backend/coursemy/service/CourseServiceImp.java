@@ -1,7 +1,6 @@
 package com.coursemy_backend.coursemy.service;
 
 import com.coursemy_backend.coursemy.entities.Course;
-import com.coursemy_backend.coursemy.entities.Course;
 import com.coursemy_backend.coursemy.repository.CourseRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
