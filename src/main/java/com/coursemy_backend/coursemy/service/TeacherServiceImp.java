@@ -4,6 +4,7 @@ import com.coursemy_backend.coursemy.entities.Teacher;
 import com.coursemy_backend.coursemy.repository.TeacherRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,10 +13,12 @@ import java.util.Optional;
 @Service
 public class TeacherServiceImp implements TeacherService {
     private TeacherRepository teacherRepository;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public TeacherServiceImp(TeacherRepository teacherRepository){
+    public TeacherServiceImp(TeacherRepository teacherRepository, PasswordEncoder passwordEncoder){
         this.teacherRepository = teacherRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -36,9 +39,22 @@ public class TeacherServiceImp implements TeacherService {
         return dbTeacher;
     }
 
+    @Transactional
     @Override
     public Teacher createTeacher(Teacher teacher){
+        if(!verifyPassword(teacher.getPassword())){
+            throw new IllegalArgumentException("Password must be 6-20 characters long, contain at least one uppercase letter, and at least one lowercase letter.");
+        }
+
+        String encodedPassword = passwordEncoder.encode(teacher.getPassword());
+        teacher.setPassword(encodedPassword);
+
         return teacherRepository.save(teacher);
+    }
+
+    public boolean verifyPassword(String password){
+        String regex = "^(?=.*[a-z])(?=.*[A-Z]).{6,20}$";
+        return password != null && password.matches(regex);
     }
 
     @Transactional

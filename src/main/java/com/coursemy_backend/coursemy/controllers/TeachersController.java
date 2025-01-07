@@ -30,7 +30,6 @@ public class TeachersController {
 
     @PostMapping("/teachers")
     public Teacher createTeacher(@Valid @RequestBody Teacher teacher){
-        System.out.println("here" + teacher.toString());
         return teacherService.createTeacher(teacher);
     }
 }

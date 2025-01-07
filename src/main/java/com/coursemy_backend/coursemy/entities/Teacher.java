@@ -36,10 +36,6 @@ public class Teacher {
     @Column(name = "password")
     @NotNull(message = "Password is required")
     @NotEmpty(message = "Password cannot be empty")
-    @Pattern(
-            regexp = "^(?=.*[a-z])(?=.*[A-Z]).{6,20}$",
-            message = "Password must be 6-20 characters long, contain at least one uppercase letter, and at least one lowercase letter"
-    )
     private String password;
 
 
