@@ -4,6 +4,7 @@ import com.coursemy_backend.coursemy.entities.Student;
 import com.coursemy_backend.coursemy.repository.StudentRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.Optional;
 @Service
 public class StudentServiceImp implements StudentService{
     private StudentRepository studentRepository;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     public StudentServiceImp(StudentRepository studentRepository){
@@ -34,9 +36,22 @@ public class StudentServiceImp implements StudentService{
         return null;
     }
 
+    @Transactional
     @Override
     public Student createStudent(Student student) {
+        if(!validatePassword(student.getPassword())){
+            throw new IllegalArgumentException("Password must be 6-20 characters long, contain at least one uppercase letter, and at least one lowercase letter.");
+        }
+
+        String password = passwordEncoder.encode(student.getPassword());
+        student.setPassword(password);
+
         return studentRepository.save(student);
+    }
+
+    public boolean validatePassword(String password){
+        String regex = "^(?=.*[a-z])(?=.*[A-Z]).{6,20}$";
+        return password != null && password.matches(regex);
     }
 
     @Transactional
