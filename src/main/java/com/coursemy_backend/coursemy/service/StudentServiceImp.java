@@ -2,6 +2,7 @@ package com.coursemy_backend.coursemy.service;
 
 import com.coursemy_backend.coursemy.entities.Student;
 import com.coursemy_backend.coursemy.repository.StudentRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,17 +39,20 @@ public class StudentServiceImp implements StudentService{
         return studentRepository.save(student);
     }
 
+    @Transactional
     @Override
     public Student updateStudent(long id, Student student) {
         Optional<Student> existingStudent = studentRepository.findById(id);
-
+        System.out.println("Student " + existingStudent.toString());
         if(existingStudent.isPresent()){
             Student dbStudent = existingStudent.get();
             if(student.getFirstName() != null){
                 dbStudent.setFirstName(student.getFirstName());
-            }else if(student.getLastName() != null){
+            }
+            if(student.getLastName() != null){
                 dbStudent.setLastName(student.getLastName());
-            }else if(student.getEmail() != null){
+            }
+            if(student.getEmail() != null){
                 dbStudent.setEmail(student.getEmail());
             }
 

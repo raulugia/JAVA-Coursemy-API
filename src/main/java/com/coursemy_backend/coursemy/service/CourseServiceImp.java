@@ -3,6 +3,7 @@ package com.coursemy_backend.coursemy.service;
 import com.coursemy_backend.coursemy.entities.Course;
 import com.coursemy_backend.coursemy.entities.Course;
 import com.coursemy_backend.coursemy.repository.CourseRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,6 +41,7 @@ public class CourseServiceImp implements CourseService{
         return courseRepository.save(course);
     }
 
+    @Transactional
     @Override
     public Course updateCourse(long id, Course course) {
         Optional<Course> existingCourse = courseRepository.findById(id);
@@ -48,9 +50,11 @@ public class CourseServiceImp implements CourseService{
             Course dbCourse = existingCourse.get();
             if(course.getName() != null){
                 dbCourse.setName(course.getName());
-            }else if(course.getDescription() != null){
+            }
+            if(course.getDescription() != null){
                 dbCourse.setDescription(course.getDescription());
-            }else if(course.getImageUrl() != null){
+            }
+            if(course.getImageUrl() != null){
                 dbCourse.setImageUrl(course.getImageUrl());
             }
 

@@ -2,6 +2,7 @@ package com.coursemy_backend.coursemy.service;
 
 import com.coursemy_backend.coursemy.entities.Teacher;
 import com.coursemy_backend.coursemy.repository.TeacherRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,6 +41,7 @@ public class TeacherServiceImp implements TeacherService {
         return teacherRepository.save(teacher);
     }
 
+    @Transactional
     @Override
     public Teacher updateTeacher(long id, Teacher teacher){
         Optional<Teacher> existingTeacher = teacherRepository.findById(id);
@@ -48,9 +50,11 @@ public class TeacherServiceImp implements TeacherService {
             Teacher dbTeacher = existingTeacher.get();
             if(teacher.getFirstName() != null){
                 dbTeacher.setFirstName(teacher.getFirstName());
-            }else if(teacher.getLastName() != null){
+            }
+            if(teacher.getLastName() != null){
                 dbTeacher.setLastName(teacher.getLastName());
-            } else if (teacher.getEmail() != null) {
+            }
+            if (teacher.getEmail() != null) {
                 dbTeacher.setEmail(teacher.getEmail());
             }
 
