@@ -4,10 +4,12 @@ import com.coursemy_backend.coursemy.entities.Course;
 import com.coursemy_backend.coursemy.entities.Course;
 import com.coursemy_backend.coursemy.repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class CourseServiceImp implements CourseService{
     private CourseRepository courseRepository;
     
@@ -29,6 +31,8 @@ public class CourseServiceImp implements CourseService{
             Course dbCourse = existingCourse.get();
             return dbCourse;
         }
+
+        return null;
     }
 
     @Override

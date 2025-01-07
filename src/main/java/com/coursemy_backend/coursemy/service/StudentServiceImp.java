@@ -3,10 +3,12 @@ package com.coursemy_backend.coursemy.service;
 import com.coursemy_backend.coursemy.entities.Student;
 import com.coursemy_backend.coursemy.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class StudentServiceImp implements StudentService{
     private StudentRepository studentRepository;
 
