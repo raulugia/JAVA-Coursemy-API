@@ -12,7 +12,7 @@ public interface CourseService {
 
     Course createCourse(CourseDTO course);
 
-    Course updateCourse(long id, CourseDTO course );
+    CourseDTO updateCourse(long id, CourseDTO course );
 
     String removeById(long id);
 }

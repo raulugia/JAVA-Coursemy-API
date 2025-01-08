@@ -71,7 +71,7 @@ public class CourseServiceImp implements CourseService{
 
     @Transactional
     @Override
-    public Course updateCourse(long id, CourseDTO course) {
+    public CourseDTO updateCourse(long id, CourseDTO course) {
         Optional<Course> existingCourse = courseRepository.findById(id);
         if(existingCourse.isPresent()){
             Course dbCourse = existingCourse.get();
@@ -88,7 +88,9 @@ public class CourseServiceImp implements CourseService{
                 dbCourse.setImageUrl(course.getImageUrl());
             }
 
-            return courseRepository.save(dbCourse);
+            Course updatedCourse = courseRepository.save(dbCourse);
+
+            return new CourseDTO(updatedCourse.getName(), updatedCourse.getDescription(), updatedCourse.getImageUrl(), updatedCourse.getTeacher().getId(), new TeacherDTO(updatedCourse.getTeacher().getId(),updatedCourse.getTeacher().getFirstName(), updatedCourse.getTeacher().getLastName()));
         }
 
         throw new EntityNotFound("Course not found");

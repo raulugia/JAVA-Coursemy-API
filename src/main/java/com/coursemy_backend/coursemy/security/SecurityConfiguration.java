@@ -23,7 +23,7 @@ public class SecurityConfiguration {
 
                                     //Requests to create, update and delete a course - Teacher role
                                     .requestMatchers(HttpMethod.POST, "/api/courses/*").hasRole("TEACHER")
-                                    //.requestMatchers(HttpMethod.PUT, "/api/courses/*").hasRole("TEACHER")
+                                    .requestMatchers(HttpMethod.PUT, "/api/courses/*").hasRole("TEACHER")
                                     .requestMatchers(HttpMethod.DELETE, "/api/courses/*").hasRole("TEACHER")
 
                                     //requests to enroll and drop out of a course - Student
