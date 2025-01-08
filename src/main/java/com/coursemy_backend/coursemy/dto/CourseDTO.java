@@ -19,7 +19,6 @@ public class CourseDTO {
     private String imageUrl;
 
     @Min(value = 1, message = "Teacher id cannot be smaller than 1")
-    @NotEmpty(message = "Teacher id cannot be empty")
     @NotNull(message = "Teacher id is required")
     private long id;
 
@@ -29,6 +28,7 @@ public class CourseDTO {
         this.imageUrl = imageUrl;
         this.id = id;
     }
+
 
     public String getName() {
         return name;

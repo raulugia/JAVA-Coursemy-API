@@ -10,9 +10,9 @@ public interface CourseService {
 
     Course getById(long id);
 
-    Course createCourse(CourseDTO Course);
+    Course createCourse(CourseDTO course);
 
-    Course updateCourse(long id, Course Course);
+    Course updateCourse(long id, CourseDTO course );
 
     String removeById(long id);
 }

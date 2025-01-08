@@ -62,11 +62,14 @@ public class CourseServiceImp implements CourseService{
 
     @Transactional
     @Override
-    public Course updateCourse(long id, Course course) {
+    public Course updateCourse(long id, CourseDTO course) {
         Optional<Course> existingCourse = courseRepository.findById(id);
 
         if(existingCourse.isPresent()){
             Course dbCourse = existingCourse.get();
+            if(dbCourse.getId() != course.getId()){
+
+            }
             if(course.getName() != null){
                 dbCourse.setName(course.getName());
             }

@@ -53,6 +53,14 @@ public class Course {
         this.imageUrl = imageUrl;
     }
 
+    public long getId(){
+        return id;
+    }
+
+    public void setId(long id){
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
