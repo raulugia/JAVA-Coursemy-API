@@ -38,6 +38,9 @@ public class Teacher {
     @NotEmpty(message = "Password cannot be empty")
     private String password;
 
+    @Column(name = "role")
+    private String role;
+
 
     @OneToMany(mappedBy = "teacher", fetch=FetchType.LAZY, cascade={CascadeType.REMOVE})
     private List<Course> courses = new ArrayList<>();
@@ -51,6 +54,7 @@ public class Teacher {
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+        this.role = "TEACHER";
     }
 
     public String getFirstName(){
@@ -85,6 +89,10 @@ public class Teacher {
         this.password = password;
     }
 
+    public String getRole() {
+        return role;
+    }
+
     @Override
     public String toString() {
         return "Teacher{" +
@@ -92,6 +100,8 @@ public class Teacher {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
+                ", role='" + role + '\'' +
+                ", courses=" + courses +
                 '}';
     }
 }

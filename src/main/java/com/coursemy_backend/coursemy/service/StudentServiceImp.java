@@ -16,8 +16,9 @@ public class StudentServiceImp implements StudentService{
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public StudentServiceImp(StudentRepository studentRepository){
+    public StudentServiceImp(StudentRepository studentRepository, PasswordEncoder passwordEncoder){
         this.studentRepository = studentRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override

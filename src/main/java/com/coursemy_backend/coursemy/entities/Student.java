@@ -34,11 +34,10 @@ public class Student {
     @Column(name = "password")
     @NotNull(message = "Password is required")
     @NotEmpty(message = "Password cannot be empty")
-    @Pattern(
-            regexp = "^(?=.*[a-z])(?=.*[A-Z]).{6,20}$",
-            message = "Password must be 6-20 characters long, contain at least one uppercase letter, and at least one lowercase letter"
-    )
     private String password;
+
+    @Column(name = "role")
+    private String role;
 
     public Student(){
 
@@ -52,6 +51,7 @@ public class Student {
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+        this.role = "STUDENT";
     }
 
     public String getFirstName() {
@@ -86,6 +86,10 @@ public class Student {
         this.password = password;
     }
 
+    public String getRole(){
+        return this.role;
+    }
+
     @Override
     public String toString() {
         return "Student{" +
@@ -93,6 +97,7 @@ public class Student {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
+                ", role='" + role + '\'' +
                 '}';
     }
 }

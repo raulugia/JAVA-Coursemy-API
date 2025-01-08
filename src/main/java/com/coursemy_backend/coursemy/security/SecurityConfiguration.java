@@ -18,9 +18,19 @@ public class SecurityConfiguration {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth ->
                             auth
-                                //allow public access to these endpoints with POST to allow the creation of students/teachers
-                                .requestMatchers(HttpMethod.POST,"/api/teachers", "/api/students").permitAll()
-                                .anyRequest().authenticated())
+                                    //allow public access to these endpoints with POST to allow the creation of students/teachers
+                                    .requestMatchers(HttpMethod.POST,"/api/teachers", "/api/students").permitAll()
+
+                                    //Requests to create, update and delete a course - Teacher role
+                                    .requestMatchers(HttpMethod.POST, "/api/courses/{id}").hasRole("TEACHER")
+                                    .requestMatchers(HttpMethod.PUT, "/api/courses/{id}").hasRole("TEACHER")
+                                    .requestMatchers(HttpMethod.DELETE, "/api/course/{id}").hasRole("TEACHER")
+
+                                    //requests to enroll and drop out of a course - Student
+                                    .requestMatchers(HttpMethod.POST, "/api/courses/{id}/enroll").hasRole("STUDENT")
+                                    .requestMatchers(HttpMethod.DELETE, "/api/courses/{id}/enroll").hasRole("STUDENT")
+
+                                    .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults());
 
         return http.build();
