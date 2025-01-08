@@ -6,7 +6,7 @@ import com.coursemy_backend.coursemy.entities.Course;
 import java.util.List;
 
 public interface CourseService {
-    List<Course> getAllCourses();
+    List<CourseDTO> getAllCourses();
 
     Course getById(long id);
 

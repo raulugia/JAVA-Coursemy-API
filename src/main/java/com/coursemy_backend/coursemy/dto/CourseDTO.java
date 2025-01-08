@@ -22,11 +22,14 @@ public class CourseDTO {
     @NotNull(message = "Teacher id is required")
     private long id;
 
-    public CourseDTO(String name, String description, String imageUrl, long id) {
+    private TeacherDTO teacher;
+
+    public CourseDTO(String name, String description, String imageUrl, long id, TeacherDTO teacher) {
         this.name = name;
         this.description = description;
         this.imageUrl = imageUrl;
         this.id = id;
+        this.teacher = teacher;
     }
 
 
@@ -60,5 +63,13 @@ public class CourseDTO {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public TeacherDTO getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(TeacherDTO teacher) {
+        this.teacher = teacher;
     }
 }

@@ -24,7 +24,7 @@ public class CourseController {
     }
 
     @GetMapping("/courses")
-    public List<Course> findAll(){
+    public List<CourseDTO> findAll(){
         return courseService.getAllCourses();
     }
 

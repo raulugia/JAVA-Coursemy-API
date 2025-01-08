@@ -1,9 +1,11 @@
 package com.coursemy_backend.coursemy.service;
 
 import com.coursemy_backend.coursemy.dto.CourseDTO;
+import com.coursemy_backend.coursemy.dto.TeacherDTO;
 import com.coursemy_backend.coursemy.entities.Course;
 import com.coursemy_backend.coursemy.entities.Teacher;
 import com.coursemy_backend.coursemy.exception.EntityNotFound;
+import com.coursemy_backend.coursemy.exception.NotAuthorized;
 import com.coursemy_backend.coursemy.repository.CourseRepository;
 import com.coursemy_backend.coursemy.repository.TeacherRepository;
 import jakarta.transaction.Transactional;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CourseServiceImp implements CourseService{
@@ -25,9 +28,13 @@ public class CourseServiceImp implements CourseService{
         this.teacherRepository = teacherRepository;
     }
 
+    @Transactional
     @Override
-    public List<Course> getAllCourses() {
-        return courseRepository.findAll();
+    public List<CourseDTO> getAllCourses() {
+        List<Course> courses = courseRepository.findAll();
+        return courses.stream()
+                .map(course -> new CourseDTO(course.getName(), course.getDescription(), course.getImageUrl(), course.getTeacher().getId(), new TeacherDTO(course.getTeacher().getId(), course.getTeacher().getFirstName(), course.getTeacher().getLastName())))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -68,7 +75,7 @@ public class CourseServiceImp implements CourseService{
         if(existingCourse.isPresent()){
             Course dbCourse = existingCourse.get();
             if(dbCourse.getId() != course.getId()){
-
+                throw new NotAuthorized("You cannot modify this course");
             }
             if(course.getName() != null){
                 dbCourse.setName(course.getName());
@@ -82,7 +89,8 @@ public class CourseServiceImp implements CourseService{
 
             return courseRepository.save(dbCourse);
         }
-        return null;
+
+        throw new EntityNotFound("Course not found");
     }
 
     @Override
