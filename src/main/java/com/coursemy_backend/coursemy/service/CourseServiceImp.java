@@ -37,21 +37,23 @@ public class CourseServiceImp implements CourseService{
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     @Override
-    public Course getById(long id) {
+    public CourseDTO getById(long id) {
         Optional<Course> existingCourse = courseRepository.findById(id);
 
         if(existingCourse.isPresent()){
             Course dbCourse = existingCourse.get();
-            return dbCourse;
+            return new CourseDTO(dbCourse.getName(), dbCourse.getDescription(), dbCourse.getImageUrl(), dbCourse.getId(),new TeacherDTO(dbCourse.getTeacher().getId(),dbCourse.getTeacher().getFirstName(), dbCourse.getTeacher().getLastName()));
         }
 
         return null;
     }
 
+    @Transactional
     @Override
     public Course createCourse(CourseDTO course) {
-        Optional<Teacher> dbTeacher = teacherRepository.findById(course.getId());
+        Optional<Teacher> dbTeacher = teacherRepository.findById(course.getTeacherId());
         if(dbTeacher.isPresent()){
             Teacher teacher = dbTeacher.get();
             Course newCourse = new Course();
@@ -71,10 +73,9 @@ public class CourseServiceImp implements CourseService{
     @Override
     public Course updateCourse(long id, CourseDTO course) {
         Optional<Course> existingCourse = courseRepository.findById(id);
-
         if(existingCourse.isPresent()){
             Course dbCourse = existingCourse.get();
-            if(dbCourse.getId() != course.getId()){
+            if(dbCourse.getTeacher().getId() != course.getTeacherId()){
                 throw new NotAuthorized("You cannot modify this course");
             }
             if(course.getName() != null){

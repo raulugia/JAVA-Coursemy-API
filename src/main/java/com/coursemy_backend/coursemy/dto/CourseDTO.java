@@ -20,18 +20,17 @@ public class CourseDTO {
 
     @Min(value = 1, message = "Teacher id cannot be smaller than 1")
     @NotNull(message = "Teacher id is required")
-    private long id;
+    private long teacherId;
 
     private TeacherDTO teacher;
 
-    public CourseDTO(String name, String description, String imageUrl, long id, TeacherDTO teacher) {
+    public CourseDTO(String name, String description, String imageUrl, long teacherId, TeacherDTO teacher) {
         this.name = name;
         this.description = description;
         this.imageUrl = imageUrl;
-        this.id = id;
+        this.teacherId = teacherId;
         this.teacher = teacher;
     }
-
 
     public String getName() {
         return name;
@@ -57,12 +56,12 @@ public class CourseDTO {
         this.imageUrl = imageUrl;
     }
 
-    public long getId() {
-        return id;
+    public long getTeacherId() {
+        return teacherId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setTeacherId(long teacherId) {
+        this.teacherId = teacherId;
     }
 
     public TeacherDTO getTeacher() {
@@ -72,4 +71,5 @@ public class CourseDTO {
     public void setTeacher(TeacherDTO teacher) {
         this.teacher = teacher;
     }
+
 }

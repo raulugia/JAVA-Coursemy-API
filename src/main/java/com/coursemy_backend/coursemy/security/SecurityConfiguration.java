@@ -22,13 +22,13 @@ public class SecurityConfiguration {
                                     .requestMatchers(HttpMethod.POST,"/api/teachers", "/api/students").permitAll()
 
                                     //Requests to create, update and delete a course - Teacher role
-                                    .requestMatchers(HttpMethod.POST, "/api/courses/{id}").hasRole("TEACHER")
-                                    .requestMatchers(HttpMethod.PUT, "/api/courses/{id}").hasRole("TEACHER")
-                                    .requestMatchers(HttpMethod.DELETE, "/api/course/{id}").hasRole("TEACHER")
+                                    .requestMatchers(HttpMethod.POST, "/api/courses/*").hasRole("TEACHER")
+                                    //.requestMatchers(HttpMethod.PUT, "/api/courses/*").hasRole("TEACHER")
+                                    .requestMatchers(HttpMethod.DELETE, "/api/courses/*").hasRole("TEACHER")
 
                                     //requests to enroll and drop out of a course - Student
-                                    .requestMatchers(HttpMethod.POST, "/api/courses/{id}/enroll").hasRole("STUDENT")
-                                    .requestMatchers(HttpMethod.DELETE, "/api/courses/{id}/enroll").hasRole("STUDENT")
+                                    .requestMatchers(HttpMethod.POST, "/api/courses/*/enroll").hasRole("STUDENT")
+                                    .requestMatchers(HttpMethod.DELETE, "/api/courses/*/enroll").hasRole("STUDENT")
 
                                     .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults());

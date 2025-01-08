@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,13 +29,13 @@ public class CustomUserDetailsService implements UserDetailsService {
         Optional<Teacher> teacher = teacherRepository.findByEmail(email);
         if(teacher.isPresent()){
             Teacher dbTeacher = teacher.get();
-            return new CustomUserDetails(dbTeacher.getEmail(), dbTeacher.getPassword());
+            return new CustomUserDetails(dbTeacher.getEmail(), dbTeacher.getPassword(), List.of("ROLE_TEACHER"));
         }
 
         Optional<Student> student = studentRepository.findByEmail(email);
         if(student.isPresent()){
             Student dbStudent = student.get();
-            return new CustomUserDetails(dbStudent.getEmail(), dbStudent.getPassword());
+            return new CustomUserDetails(dbStudent.getEmail(), dbStudent.getPassword(), List.of("ROLE_STUDENT"));
         }
 
         throw new UsernameNotFoundException("User not found");

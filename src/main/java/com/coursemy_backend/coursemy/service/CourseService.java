@@ -8,7 +8,7 @@ import java.util.List;
 public interface CourseService {
     List<CourseDTO> getAllCourses();
 
-    Course getById(long id);
+    CourseDTO getById(long id);
 
     Course createCourse(CourseDTO course);
 

@@ -6,22 +6,27 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class CustomUserDetails implements UserDetails {
     private String email;
     private String password;
+    private List<String> roles;
 
-    public CustomUserDetails(String email, String password){
+    public CustomUserDetails(String email, String password, List<String> roles){
         this.email = email;
         this.password = password;
+        this.roles = roles;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // For simplicity, we're returning an empty authority list
-        // This is where you can add roles/permissions if needed
-        return Collections.singletonList(new SimpleGrantedAuthority("USER"));
+        return roles.stream()
+                .map(role -> new SimpleGrantedAuthority(role))
+                .collect(Collectors.toList());
     }
+
 
     @Override
     public String getPassword(){

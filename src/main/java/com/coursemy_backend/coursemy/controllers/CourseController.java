@@ -29,7 +29,7 @@ public class CourseController {
     }
 
     @GetMapping("/courses/{id}")
-    public Course findById(@PathVariable long id){
+    public CourseDTO findById(@PathVariable long id){
         return courseService.getById(id);
     }
 
@@ -38,13 +38,13 @@ public class CourseController {
         return courseService.createCourse(courseRequest);
     }
 
-    @PutMapping("courses/{id}")
-    Course updateCourse(@Valid long id, CourseDTO course){
+    @PutMapping("/courses/{id}")
+    Course updateCourse(@Valid @PathVariable long id, @RequestBody CourseDTO course){
         return courseService.updateCourse(id, course);
     }
 
-    @DeleteMapping("/courses")
-    String deleteCourse(@RequestBody long id){
+    @DeleteMapping("/courses/{id}")
+    String deleteCourse(@PathVariable long id){
         return courseService.removeById(id);
     }
 }
