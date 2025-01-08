@@ -1,6 +1,8 @@
 package com.coursemy_backend.coursemy.service;
 
+import com.coursemy_backend.coursemy.dto.TeacherDTO;
 import com.coursemy_backend.coursemy.entities.Teacher;
+import com.coursemy_backend.coursemy.exception.EntityNotFound;
 import com.coursemy_backend.coursemy.repository.TeacherRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TeacherServiceImp implements TeacherService {
@@ -22,21 +25,24 @@ public class TeacherServiceImp implements TeacherService {
     }
 
     @Override
-    public List<Teacher> getAllTeachers(){
-        return teacherRepository.findAll();
+    public List<TeacherDTO> getAllTeachers(){
+        return teacherRepository.findAll()
+                .stream()
+                .map(teacher -> new TeacherDTO(teacher.getId(), teacher.getFirstName(), teacher.getLastName()))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public Teacher getById(long id){
+    public TeacherDTO getById(long id){
         Optional<Teacher> teacher = teacherRepository.findById(id);
 
         Teacher dbTeacher = null;
         if(teacher.isPresent()){
             dbTeacher = teacher.get();
-            return dbTeacher;
+            return new TeacherDTO(dbTeacher.getId(), dbTeacher.getFirstName(), dbTeacher.getLastName());
         }
 
-        return dbTeacher;
+        throw new EntityNotFound("Teacher not found");
     }
 
     @Transactional

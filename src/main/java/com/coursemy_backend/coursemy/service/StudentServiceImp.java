@@ -2,6 +2,7 @@ package com.coursemy_backend.coursemy.service;
 
 import com.coursemy_backend.coursemy.dto.StudentDTO;
 import com.coursemy_backend.coursemy.entities.Student;
+import com.coursemy_backend.coursemy.exception.EntityNotFound;
 import com.coursemy_backend.coursemy.repository.StudentRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,14 +33,14 @@ public class StudentServiceImp implements StudentService{
     }
 
     @Override
-    public Student getById(long id) {
+    public StudentDTO getById(long id) {
         Optional<Student> student = studentRepository.findById(id);
 
         if(student.isPresent()){
             Student dbStudent = student.get();
-            return dbStudent;
+            return new StudentDTO(dbStudent.getId(), dbStudent.getFirstName(), dbStudent.getLastName());
         }
-        return null;
+        throw  new EntityNotFound("Student not found");
     }
 
     @Transactional

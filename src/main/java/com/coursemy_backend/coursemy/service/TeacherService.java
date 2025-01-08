@@ -1,5 +1,6 @@
 package com.coursemy_backend.coursemy.service;
 
+import com.coursemy_backend.coursemy.dto.TeacherDTO;
 import com.coursemy_backend.coursemy.entities.Teacher;
 import org.springframework.stereotype.Service;
 
@@ -7,9 +8,9 @@ import java.util.List;
 
 @Service
 public interface TeacherService {
-    List<Teacher> getAllTeachers();
+    List<TeacherDTO> getAllTeachers();
 
-    Teacher getById(long id);
+    TeacherDTO getById(long id);
 
     Teacher createTeacher(Teacher teacher);
 

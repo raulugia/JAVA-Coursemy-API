@@ -1,5 +1,6 @@
 package com.coursemy_backend.coursemy.controllers;
 
+import com.coursemy_backend.coursemy.dto.TeacherDTO;
 import com.coursemy_backend.coursemy.entities.Teacher;
 import com.coursemy_backend.coursemy.service.TeacherService;
 import jakarta.validation.Valid;
@@ -19,12 +20,12 @@ public class TeachersController {
     }
 
     @GetMapping("/teachers")
-    public List<Teacher> getAll(){
+    public List<TeacherDTO> getAll(){
         return teacherService.getAllTeachers();
     }
 
     @GetMapping("/teachers/{id}")
-    public Teacher getById(@PathVariable long id){
+    public TeacherDTO getById(@PathVariable long id){
         return teacherService.getById(id);
     }
 

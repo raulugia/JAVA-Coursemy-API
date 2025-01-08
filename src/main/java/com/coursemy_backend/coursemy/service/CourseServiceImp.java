@@ -1,7 +1,9 @@
 package com.coursemy_backend.coursemy.service;
 
+import com.coursemy_backend.coursemy.dto.CourseDTO;
 import com.coursemy_backend.coursemy.entities.Course;
 import com.coursemy_backend.coursemy.entities.Teacher;
+import com.coursemy_backend.coursemy.exception.EntityNotFound;
 import com.coursemy_backend.coursemy.repository.CourseRepository;
 import com.coursemy_backend.coursemy.repository.TeacherRepository;
 import jakarta.transaction.Transactional;
@@ -41,16 +43,21 @@ public class CourseServiceImp implements CourseService{
     }
 
     @Override
-    public Course createCourse(Course course) {
-        Optional<Teacher> dbTeacher = teacherRepository.findById(course.getTeacher().getId());
+    public Course createCourse(CourseDTO course) {
+        Optional<Teacher> dbTeacher = teacherRepository.findById(course.getId());
         if(dbTeacher.isPresent()){
             Teacher teacher = dbTeacher.get();
-            course.setTeacher(teacher);
+            Course newCourse = new Course();
 
-            return courseRepository.save(course);
+            newCourse.setName(course.getName());
+            newCourse.setDescription(course.getDescription());
+            newCourse.setImageUrl(course.getImageUrl());
+            newCourse.setTeacher(teacher);
+
+            return courseRepository.save(newCourse);
         }
 
-        throw new IllegalArgumentException("Teacher not found");
+        throw new EntityNotFound("Teacher not found");
     }
 
     @Transactional

@@ -2,6 +2,7 @@ package com.coursemy_backend.coursemy.controllers;
 
 import com.coursemy_backend.coursemy.dto.StudentDTO;
 import com.coursemy_backend.coursemy.entities.Student;
+import com.coursemy_backend.coursemy.exception.EntityNotFound;
 import com.coursemy_backend.coursemy.service.StudentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,10 @@ public class StudentController {
     }
 
     @GetMapping("/students/{id}")
-    public Student findById(@PathVariable long id){
+    public StudentDTO findById(@PathVariable long id){
+        if (id < 0) {
+            throw new EntityNotFound("Student not found");
+        }
         return studentService.getById(id);
     }
 

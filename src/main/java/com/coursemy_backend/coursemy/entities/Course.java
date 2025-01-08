@@ -78,7 +78,7 @@ public class Course {
     }
 
     public Teacher getTeacher(){
-        return this.teacher;
+        return teacher;
     }
 
     public void setTeacher(Teacher teacher){
