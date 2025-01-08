@@ -1,5 +1,6 @@
 package com.coursemy_backend.coursemy.service;
 
+import com.coursemy_backend.coursemy.dto.StudentDTO;
 import com.coursemy_backend.coursemy.entities.Student;
 import com.coursemy_backend.coursemy.repository.StudentRepository;
 import jakarta.transaction.Transactional;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentServiceImp implements StudentService{
@@ -22,8 +24,11 @@ public class StudentServiceImp implements StudentService{
     }
 
     @Override
-    public List<Student> getAllStudents() {
-        return studentRepository.findAll();
+    public List<StudentDTO> getAllStudents() {
+        return studentRepository.findAll()
+                .stream()
+                .map(student -> new StudentDTO(student.getId(), student.getFirstName(), student.getLastName()))
+                .collect(Collectors.toList());
     }
 
     @Override

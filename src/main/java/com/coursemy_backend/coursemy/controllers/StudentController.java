@@ -1,5 +1,6 @@
 package com.coursemy_backend.coursemy.controllers;
 
+import com.coursemy_backend.coursemy.dto.StudentDTO;
 import com.coursemy_backend.coursemy.entities.Student;
 import com.coursemy_backend.coursemy.service.StudentService;
 import jakarta.validation.Valid;
@@ -19,7 +20,7 @@ public class StudentController {
     }
 
     @GetMapping("/students")
-    public List<Student> findAll(){
+    public List<StudentDTO> findAll(){
         return studentService.getAllStudents();
     }
 

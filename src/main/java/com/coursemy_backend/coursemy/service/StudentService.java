@@ -1,11 +1,12 @@
 package com.coursemy_backend.coursemy.service;
 
+import com.coursemy_backend.coursemy.dto.StudentDTO;
 import com.coursemy_backend.coursemy.entities.Student;
 
 import java.util.List;
 
 public interface StudentService {
-    List<Student> getAllStudents();
+    List<StudentDTO> getAllStudents();
 
     Student getById(long id);
 
