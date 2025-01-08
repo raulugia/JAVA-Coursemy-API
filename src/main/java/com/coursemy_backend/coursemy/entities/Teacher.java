@@ -57,6 +57,10 @@ public class Teacher {
         this.role = "TEACHER";
     }
 
+    public long getId(){
+        return id;
+    }
+
     public String getFirstName(){
         return firstName;
     }

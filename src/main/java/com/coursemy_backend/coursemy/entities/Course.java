@@ -77,6 +77,14 @@ public class Course {
         this.imageUrl = imageUrl;
     }
 
+    public Teacher getTeacher(){
+        return this.teacher;
+    }
+
+    public void setTeacher(Teacher teacher){
+        this.teacher = teacher;
+    }
+
     @Override
     public String toString() {
         return "Course{" +

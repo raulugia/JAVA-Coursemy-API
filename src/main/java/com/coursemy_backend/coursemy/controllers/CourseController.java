@@ -1,7 +1,9 @@
 package com.coursemy_backend.coursemy.controllers;
 
 import com.coursemy_backend.coursemy.entities.Course;
+import com.coursemy_backend.coursemy.entities.Teacher;
 import com.coursemy_backend.coursemy.service.CourseService;
+import com.coursemy_backend.coursemy.service.TeacherService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +14,7 @@ import java.util.List;
 @RequestMapping("/api")
 public class CourseController {
     private CourseService courseService;
+    private TeacherService teacherService;
 
     @Autowired
     CourseController(CourseService courseService){
