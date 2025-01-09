@@ -1,5 +1,6 @@
 package com.coursemy_backend.coursemy.entities;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
@@ -61,6 +62,10 @@ public class Teacher {
         return id;
     }
 
+    public void setId(long id){
+        this.id = id;
+    }
+
     public String getFirstName(){
         return firstName;
     }
@@ -95,6 +100,18 @@ public class Teacher {
 
     public String getRole() {
         return role;
+    }
+
+    public void setRole(String role){
+        this.role = role;
+    }
+
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
     }
 
     @Override

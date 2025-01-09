@@ -1,14 +1,32 @@
 package com.coursemy_backend.coursemy.dto;
 
+import com.coursemy_backend.coursemy.views.Views;
+import com.fasterxml.jackson.annotation.JsonView;
+
 public class TeacherDTO {
+    @JsonView(Views.Detailed.class)
     private long id;
+
+    @JsonView(Views.Basic.class)
     private String firstName;
+
+    @JsonView(Views.Basic.class)
     private String lastName;
+
+    @JsonView(Views.Detailed.class)
+    private String email;
 
     public TeacherDTO(long id, String firstName, String lastName){
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    public TeacherDTO(long id, String firstName, String lastName, String email){
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
     }
 
     public long getId(){
@@ -33,5 +51,13 @@ public class TeacherDTO {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getEmail(){
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

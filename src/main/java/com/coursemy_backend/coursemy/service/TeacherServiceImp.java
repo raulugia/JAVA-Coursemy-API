@@ -24,6 +24,7 @@ public class TeacherServiceImp implements TeacherService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @Transactional
     @Override
     public List<TeacherDTO> getAllTeachers(){
         return teacherRepository.findAll()
@@ -32,6 +33,7 @@ public class TeacherServiceImp implements TeacherService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     @Override
     public TeacherDTO getById(long id){
         Optional<Teacher> teacher = teacherRepository.findById(id);
@@ -83,9 +85,10 @@ public class TeacherServiceImp implements TeacherService {
             return teacherRepository.save(dbTeacher);
         }
 
-        return null;
+        throw  new EntityNotFound("Teacher not found");
     }
 
+    @Transactional
     @Override
     public String removeById(long id){
         Optional<Teacher> existingTeacher = teacherRepository.findById(id);

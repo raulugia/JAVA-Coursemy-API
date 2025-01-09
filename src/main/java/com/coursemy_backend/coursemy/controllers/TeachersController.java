@@ -3,6 +3,8 @@ package com.coursemy_backend.coursemy.controllers;
 import com.coursemy_backend.coursemy.dto.TeacherDTO;
 import com.coursemy_backend.coursemy.entities.Teacher;
 import com.coursemy_backend.coursemy.service.TeacherService;
+import com.coursemy_backend.coursemy.views.Views;
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,11 +22,13 @@ public class TeachersController {
     }
 
     @GetMapping("/teachers")
+    @JsonView(Views.Basic.class)
     public List<TeacherDTO> getAll(){
         return teacherService.getAllTeachers();
     }
 
     @GetMapping("/teachers/{id}")
+    @JsonView(Views.Basic.class)
     public TeacherDTO getById(@PathVariable long id){
         return teacherService.getById(id);
     }
@@ -32,5 +36,10 @@ public class TeachersController {
     @PostMapping("/teachers")
     public Teacher createTeacher(@Valid @RequestBody Teacher teacher){
         return teacherService.createTeacher(teacher);
+    }
+
+    @PutMapping("/teachers/{id}")
+    public Teacher updateTeacher(@Valid @PathVariable long id, @RequestBody Teacher teacher){
+        return teacherService.updateTeacher(id, teacher);
     }
 }
