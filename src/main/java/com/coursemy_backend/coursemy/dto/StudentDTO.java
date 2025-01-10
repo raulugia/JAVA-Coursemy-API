@@ -18,6 +18,7 @@ public class StudentDTO {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String email;
 
+
     public StudentDTO(long id, String firstName, String lastName){
         this.id = id;
         this.firstName = firstName;
