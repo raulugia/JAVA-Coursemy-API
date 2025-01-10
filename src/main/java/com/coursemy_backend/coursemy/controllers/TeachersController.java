@@ -52,4 +52,9 @@ public class TeachersController {
     public TeacherDTO updateTeacher(@Valid @PathVariable long id, @RequestBody Teacher teacher){
         return teacherService.updateTeacher(id, teacher);
     }
+
+    @DeleteMapping("/teachers/{id}")
+    public String deleteTeacher(@PathVariable long id){
+        return teacherService.removeById(id);
+    }
 }

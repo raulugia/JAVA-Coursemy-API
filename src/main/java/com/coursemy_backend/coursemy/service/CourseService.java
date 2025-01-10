@@ -10,7 +10,7 @@ public interface CourseService {
 
     CourseDTO getById(long id);
 
-    Course createCourse(CourseDTO course);
+    CourseDTO createCourse(CourseDTO course);
 
     CourseDTO updateCourse(long id, CourseDTO course );
 

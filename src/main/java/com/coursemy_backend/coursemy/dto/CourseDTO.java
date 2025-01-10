@@ -8,6 +8,9 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class CourseDTO {
+    @JsonView(Views.Basic.class)
+    private long id;
+
     @Size(min = 5, max = 50, message = "Name must be between 5 and 50 characters")
     @NotEmpty(message = "Course name cannot be empty")
     @NotNull(message = "Course name is required")
@@ -31,19 +34,24 @@ public class CourseDTO {
     @JsonView(Views.Basic.class)
     private TeacherDTO teacher;
 
-    public CourseDTO(String name, String description, String imageUrl, long teacherId, TeacherDTO teacher) {
+    public CourseDTO(){
+
+    }
+
+    public CourseDTO(long id, String name, String description, String imageUrl, TeacherDTO teacher) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.imageUrl = imageUrl;
-        this.teacherId = teacherId;
         this.teacher = teacher;
     }
 
-    public CourseDTO(String name, String description, String imageUrl, TeacherDTO teacher) {
-        this.name = name;
-        this.description = description;
-        this.imageUrl = imageUrl;
-        this.teacher = teacher;
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {

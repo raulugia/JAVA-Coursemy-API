@@ -37,7 +37,8 @@ public class CourseController {
     }
 
     @PostMapping("/courses")
-    Course createCourse(@Valid @RequestBody CourseDTO courseRequest){
+    @JsonView(Views.Basic.class)
+    CourseDTO createCourse(@Valid @RequestBody CourseDTO courseRequest){
         return courseService.createCourse(courseRequest);
     }
 

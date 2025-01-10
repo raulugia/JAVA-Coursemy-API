@@ -9,7 +9,6 @@ import com.coursemy_backend.coursemy.exception.NotAuthorized;
 import com.coursemy_backend.coursemy.repository.CourseRepository;
 import com.coursemy_backend.coursemy.repository.TeacherRepository;
 import jakarta.transaction.Transactional;
-import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +32,7 @@ public class CourseServiceImp implements CourseService{
     public List<CourseDTO> getAllCourses() {
         List<Course> courses = courseRepository.findAll();
         return courses.stream()
-                .map(course -> new CourseDTO(course.getName(), course.getDescription(), course.getImageUrl(), course.getTeacher().getId(), new TeacherDTO(course.getTeacher().getId(), course.getTeacher().getFirstName(), course.getTeacher().getLastName())))
+                .map(course -> new CourseDTO(course.getId(), course.getName(), course.getDescription(), course.getImageUrl(), new TeacherDTO(course.getTeacher().getId(), course.getTeacher().getFirstName(), course.getTeacher().getLastName())))
                 .collect(Collectors.toList());
     }
 
@@ -44,7 +43,7 @@ public class CourseServiceImp implements CourseService{
 
         if(existingCourse.isPresent()){
             Course dbCourse = existingCourse.get();
-            return new CourseDTO(dbCourse.getName(), dbCourse.getDescription(), dbCourse.getImageUrl(), dbCourse.getId(),new TeacherDTO(dbCourse.getTeacher().getId(),dbCourse.getTeacher().getFirstName(), dbCourse.getTeacher().getLastName()));
+            return new CourseDTO(dbCourse.getId(), dbCourse.getName(), dbCourse.getDescription(), dbCourse.getImageUrl(),new TeacherDTO(dbCourse.getTeacher().getId(),dbCourse.getTeacher().getFirstName(), dbCourse.getTeacher().getLastName()));
         }
 
         return null;
@@ -52,7 +51,7 @@ public class CourseServiceImp implements CourseService{
 
     @Transactional
     @Override
-    public Course createCourse(CourseDTO course) {
+    public CourseDTO createCourse(CourseDTO course) {
         Optional<Teacher> dbTeacher = teacherRepository.findById(course.getTeacherId());
         if(dbTeacher.isPresent()){
             Teacher teacher = dbTeacher.get();
@@ -63,7 +62,8 @@ public class CourseServiceImp implements CourseService{
             newCourse.setImageUrl(course.getImageUrl());
             newCourse.setTeacher(teacher);
 
-            return courseRepository.save(newCourse);
+            Course dbCourse = courseRepository.save(newCourse);
+            return new CourseDTO(dbCourse.getId(),dbCourse.getName(), dbCourse.getDescription(), dbCourse.getImageUrl(), new TeacherDTO(teacher.getId(), teacher.getFirstName(), teacher.getLastName()));
         }
 
         throw new EntityNotFound("Teacher not found");
@@ -90,7 +90,7 @@ public class CourseServiceImp implements CourseService{
 
             Course updatedCourse = courseRepository.save(dbCourse);
 
-            return new CourseDTO(updatedCourse.getName(), updatedCourse.getDescription(), updatedCourse.getImageUrl(), updatedCourse.getTeacher().getId(), new TeacherDTO(updatedCourse.getTeacher().getId(),updatedCourse.getTeacher().getFirstName(), updatedCourse.getTeacher().getLastName()));
+            return new CourseDTO(updatedCourse.getId(), updatedCourse.getName(), updatedCourse.getDescription(), updatedCourse.getImageUrl(), new TeacherDTO(updatedCourse.getTeacher().getId(),updatedCourse.getTeacher().getFirstName(), updatedCourse.getTeacher().getLastName()));
         }
 
         throw new EntityNotFound("Course not found");

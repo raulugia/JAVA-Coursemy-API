@@ -6,6 +6,7 @@ import com.coursemy_backend.coursemy.dto.TeacherDTO;
 import com.coursemy_backend.coursemy.entities.Course;
 import com.coursemy_backend.coursemy.entities.Student;
 import com.coursemy_backend.coursemy.exception.EntityNotFound;
+import com.coursemy_backend.coursemy.exception.PasswordValidationException;
 import com.coursemy_backend.coursemy.repository.CourseRepository;
 import com.coursemy_backend.coursemy.repository.StudentRepository;
 import jakarta.transaction.Transactional;
@@ -59,7 +60,7 @@ public class StudentServiceImp implements StudentService{
             Student dbStudent = existingStudent.get();
 
             return dbStudent.getCourses().stream()
-                    .map(course -> new CourseDTO(course.getName(), course.getDescription(), course.getImageUrl(), new TeacherDTO(course.getTeacher().getId(), course.getTeacher().getFirstName(), course.getTeacher().getLastName())))
+                    .map(course -> new CourseDTO(course.getId(),course.getName(), course.getDescription(), course.getImageUrl(), new TeacherDTO(course.getTeacher().getId(), course.getTeacher().getFirstName(), course.getTeacher().getLastName())))
                     .collect(Collectors.toList());
         }
 
@@ -70,7 +71,7 @@ public class StudentServiceImp implements StudentService{
     @Override
     public StudentDTO createStudent(Student student) {
         if(!validatePassword(student.getPassword())){
-            throw new IllegalArgumentException("Password must be 6-20 characters long, contain at least one uppercase letter, and at least one lowercase letter.");
+            throw new PasswordValidationException();
         }
 
         String password = passwordEncoder.encode(student.getPassword());

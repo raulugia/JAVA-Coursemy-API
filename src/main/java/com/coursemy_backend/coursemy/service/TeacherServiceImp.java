@@ -6,7 +6,6 @@ import com.coursemy_backend.coursemy.entities.Course;
 import com.coursemy_backend.coursemy.entities.Teacher;
 import com.coursemy_backend.coursemy.exception.EntityNotFound;
 import com.coursemy_backend.coursemy.exception.PasswordValidationException;
-import com.coursemy_backend.coursemy.repository.CourseRepository;
 import com.coursemy_backend.coursemy.repository.TeacherRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -127,6 +126,6 @@ public class TeacherServiceImp implements TeacherService {
             return "Teacher deleted successfully";
         }
 
-        return null;
+        throw new EntityNotFound("Teacher not found");
     }
 }
