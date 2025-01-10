@@ -48,7 +48,8 @@ public class TeachersController {
     }
 
     @PutMapping("/teachers/{id}")
-    public Teacher updateTeacher(@Valid @PathVariable long id, @RequestBody Teacher teacher){
+    @JsonView(Views.Detailed.class)
+    public TeacherDTO updateTeacher(@Valid @PathVariable long id, @RequestBody Teacher teacher){
         return teacherService.updateTeacher(id, teacher);
     }
 }

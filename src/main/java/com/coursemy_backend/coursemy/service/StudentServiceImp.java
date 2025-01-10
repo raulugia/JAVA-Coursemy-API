@@ -69,7 +69,7 @@ public class StudentServiceImp implements StudentService{
 
     @Transactional
     @Override
-    public Student createStudent(Student student) {
+    public StudentDTO createStudent(Student student) {
         if(!validatePassword(student.getPassword())){
             throw new IllegalArgumentException("Password must be 6-20 characters long, contain at least one uppercase letter, and at least one lowercase letter.");
         }
@@ -77,7 +77,9 @@ public class StudentServiceImp implements StudentService{
         String password = passwordEncoder.encode(student.getPassword());
         student.setPassword(password);
 
-        return studentRepository.save(student);
+        Student dbStudent = studentRepository.save(student);
+
+        return new StudentDTO(dbStudent.getId(), dbStudent.getFirstName(), dbStudent.getLastName(), dbStudent.getEmail());
     }
 
     public boolean validatePassword(String password){
@@ -115,9 +117,9 @@ public class StudentServiceImp implements StudentService{
 
     @Transactional
     @Override
-    public Student updateStudent(long id, Student student) {
+    public StudentDTO updateStudent(long id, Student student) {
         Optional<Student> existingStudent = studentRepository.findById(id);
-        System.out.println("Student " + existingStudent.toString());
+
         if(existingStudent.isPresent()){
             Student dbStudent = existingStudent.get();
             if(student.getFirstName() != null){
@@ -130,9 +132,10 @@ public class StudentServiceImp implements StudentService{
                 dbStudent.setEmail(student.getEmail());
             }
 
-            return studentRepository.save(dbStudent);
+            Student updatedStudent = studentRepository.save(dbStudent);
+            return new StudentDTO(updatedStudent.getId(), updatedStudent.getFirstName(), updatedStudent.getLastName(), updatedStudent.getEmail());
         }
-        return null;
+        throw new EntityNotFound("Student not found");
     }
 
     @Override

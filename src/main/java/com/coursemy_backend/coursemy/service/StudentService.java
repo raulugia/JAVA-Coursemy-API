@@ -13,13 +13,13 @@ public interface StudentService {
 
     List<CourseDTO> getStudentCourses(long id);
 
-    Student createStudent(Student student);
+    StudentDTO createStudent(Student student);
 
     String enrollCourse(long studentId, long courseId);
 
     String removeEnrollment(long courseId, long studentId);
 
-    Student updateStudent(long id, Student student);
+    StudentDTO updateStudent(long id, Student student);
 
     String removeById(long id);
 }

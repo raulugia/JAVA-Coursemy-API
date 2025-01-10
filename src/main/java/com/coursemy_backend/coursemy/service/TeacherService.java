@@ -16,7 +16,7 @@ public interface TeacherService {
 
     TeacherDTO createTeacher(Teacher teacher);
 
-    Teacher updateTeacher(long id, Teacher teacher);
+    TeacherDTO updateTeacher(long id, Teacher teacher);
 
     String removeById(long id);
 }

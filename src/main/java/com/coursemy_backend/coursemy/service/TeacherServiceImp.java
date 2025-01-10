@@ -95,7 +95,7 @@ public class TeacherServiceImp implements TeacherService {
 
     @Transactional
     @Override
-    public Teacher updateTeacher(long id, Teacher teacher){
+    public TeacherDTO updateTeacher(long id, Teacher teacher){
         Optional<Teacher> existingTeacher = teacherRepository.findById(id);
 
         if(existingTeacher.isPresent()){
@@ -110,7 +110,9 @@ public class TeacherServiceImp implements TeacherService {
                 dbTeacher.setEmail(teacher.getEmail());
             }
 
-            return teacherRepository.save(dbTeacher);
+            Teacher updatedTeacher = teacherRepository.save(dbTeacher);
+
+            return new TeacherDTO(updatedTeacher.getId(), updatedTeacher.getFirstName(), updatedTeacher.getLastName(), updatedTeacher.getEmail());
         }
 
         throw  new EntityNotFound("Teacher not found");

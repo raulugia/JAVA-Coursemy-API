@@ -31,9 +31,6 @@ public class StudentController {
 
     @GetMapping("/students/{id}")
     public StudentDTO findById(@PathVariable long id){
-        if (id < 0) {
-            throw new EntityNotFound("Student not found");
-        }
         return studentService.getById(id);
     }
 
@@ -44,7 +41,7 @@ public class StudentController {
     }
 
     @PostMapping("/students")
-    public Student createStudent(@Valid @RequestBody Student student){
+    public StudentDTO createStudent(@Valid @RequestBody Student student){
         return studentService.createStudent(student);
     }
 
@@ -54,7 +51,8 @@ public class StudentController {
     }
 
     @PutMapping("/students/{id}")
-    public Student updateStudent(@Valid @PathVariable long id, @RequestBody Student student){
+    @JsonView(Views.Detailed.class)
+    public StudentDTO updateStudent(@Valid @PathVariable long id, @RequestBody Student student){
         return studentService.updateStudent(id, student);
     }
 
