@@ -33,6 +33,14 @@ public class TeachersController {
         return teacherService.getById(id);
     }
 
+    @GetMapping("/teachers/{id}/courses")
+    @JsonView(Views.Basic.class)
+    public TeacherDTO getTeacherCourses(@PathVariable long id){
+        TeacherDTO response = teacherService.getTeacherCourses(id);
+        System.out.println(response);
+        return response;
+    }
+
     @PostMapping("/teachers")
     public Teacher createTeacher(@Valid @RequestBody Teacher teacher){
         return teacherService.createTeacher(teacher);

@@ -3,6 +3,8 @@ package com.coursemy_backend.coursemy.dto;
 import com.coursemy_backend.coursemy.views.Views;
 import com.fasterxml.jackson.annotation.JsonView;
 
+import java.util.List;
+
 public class TeacherDTO {
     @JsonView(Views.Detailed.class)
     private long id;
@@ -16,6 +18,9 @@ public class TeacherDTO {
     @JsonView(Views.Detailed.class)
     private String email;
 
+    @JsonView(Views.Basic.class)
+    private List<CourseForTeacherDTO> courses;
+
     public TeacherDTO(long id, String firstName, String lastName){
         this.id = id;
         this.firstName = firstName;
@@ -27,6 +32,13 @@ public class TeacherDTO {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+    }
+
+    public TeacherDTO(long id, String firstName, String lastName, List<CourseForTeacherDTO> courses){
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.courses = courses;
     }
 
     public long getId(){
@@ -59,5 +71,24 @@ public class TeacherDTO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<CourseForTeacherDTO> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<CourseForTeacherDTO> courses) {
+        this.courses = courses;
+    }
+
+    @Override
+    public String toString() {
+        return "TeacherDTO{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", courses=" + courses.toString() +
+                '}';
     }
 }

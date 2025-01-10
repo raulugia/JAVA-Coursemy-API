@@ -4,6 +4,8 @@ import com.coursemy_backend.coursemy.dto.StudentDTO;
 import com.coursemy_backend.coursemy.entities.Student;
 import com.coursemy_backend.coursemy.exception.EntityNotFound;
 import com.coursemy_backend.coursemy.service.StudentService;
+import com.coursemy_backend.coursemy.views.Views;
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +23,7 @@ public class StudentController {
     }
 
     @GetMapping("/students")
+    @JsonView(Views.Basic.class)
     public List<StudentDTO> findAll(){
         return studentService.getAllStudents();
     }
