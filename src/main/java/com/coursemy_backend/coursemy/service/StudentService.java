@@ -12,6 +12,8 @@ public interface StudentService {
 
     Student createStudent(Student student);
 
+    String enrollCourse(long studentId, long courseId);
+
     Student updateStudent(long id, Student student);
 
     String removeById(long id);

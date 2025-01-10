@@ -27,8 +27,8 @@ public class SecurityConfiguration {
                                     .requestMatchers(HttpMethod.DELETE, "/api/courses/*").hasRole("TEACHER")
 
                                     //requests to enroll and drop out of a course - Student
-                                    .requestMatchers(HttpMethod.POST, "/api/courses/*/enroll").hasRole("STUDENT")
-                                    .requestMatchers(HttpMethod.DELETE, "/api/courses/*/enroll").hasRole("STUDENT")
+                                    .requestMatchers(HttpMethod.POST, "/api/courses/*/enroll/*").hasRole("STUDENT")
+                                    .requestMatchers(HttpMethod.DELETE, "/api/courses/*/enroll/*").hasRole("STUDENT")
 
                                     .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults());

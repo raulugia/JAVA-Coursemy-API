@@ -41,6 +41,11 @@ public class StudentController {
         return studentService.createStudent(student);
     }
 
+    @PostMapping("/courses/{courseId}/enroll/{studentId}")
+    public String enrollCourse(@PathVariable long studentId, @PathVariable long courseId){
+        return studentService.enrollCourse(studentId, courseId);
+    }
+
     @PutMapping("/students/{id}")
     public Student updateStudent(@Valid @PathVariable long id, @RequestBody Student student){
         return studentService.updateStudent(id, student);

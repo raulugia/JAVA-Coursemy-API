@@ -1,8 +1,10 @@
 package com.coursemy_backend.coursemy.service;
 
 import com.coursemy_backend.coursemy.dto.StudentDTO;
+import com.coursemy_backend.coursemy.entities.Course;
 import com.coursemy_backend.coursemy.entities.Student;
 import com.coursemy_backend.coursemy.exception.EntityNotFound;
+import com.coursemy_backend.coursemy.repository.CourseRepository;
 import com.coursemy_backend.coursemy.repository.StudentRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +18,13 @@ import java.util.stream.Collectors;
 @Service
 public class StudentServiceImp implements StudentService{
     private StudentRepository studentRepository;
+    private CourseRepository courseRepository;
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public StudentServiceImp(StudentRepository studentRepository, PasswordEncoder passwordEncoder){
+    public StudentServiceImp(StudentRepository studentRepository, PasswordEncoder passwordEncoder, CourseRepository courseRepository){
         this.studentRepository = studentRepository;
+        this.courseRepository = courseRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -59,6 +63,34 @@ public class StudentServiceImp implements StudentService{
     public boolean validatePassword(String password){
         String regex = "^(?=.*[a-z])(?=.*[A-Z]).{6,20}$";
         return password != null && password.matches(regex);
+    }
+
+    @Transactional
+    @Override
+    public String enrollCourse(long studentId, long courseId){
+        Optional<Student> existingStudent = studentRepository.findById(studentId);
+        if(!existingStudent.isPresent()){
+            throw new EntityNotFound("Student not found");
+        }
+
+        Optional<Course> existingCourse = courseRepository.findById(courseId);
+        if(!existingCourse.isPresent()){
+            throw new EntityNotFound("Course not found");
+        }
+
+        Student dbStudent = existingStudent.get();
+        Course dbCourse = existingCourse.get();
+
+        if(!dbCourse.getStudents().contains(dbStudent)){
+            dbCourse.getStudents().add(dbStudent);
+            dbStudent.getCourses().add(dbCourse);
+            courseRepository.save(dbCourse);
+            studentRepository.save(dbStudent);
+
+            return "Enrolled successfully";
+        }
+
+        return "Enrollment failed";
     }
 
     @Transactional
