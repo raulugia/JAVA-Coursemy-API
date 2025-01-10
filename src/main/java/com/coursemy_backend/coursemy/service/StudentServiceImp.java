@@ -116,6 +116,7 @@ public class StudentServiceImp implements StudentService{
     }
 
     @Override
+    @Transactional
     public String removeById(long id) {
         Optional<Student> existingStudent = studentRepository.findById(id);
 
@@ -124,5 +125,31 @@ public class StudentServiceImp implements StudentService{
             return "Student deleted successfully";
         }
         return "Error";
+    }
+
+    @Override
+    @Transactional
+    public String removeEnrollment(long courseId, long studentId){
+        Optional<Student> existingStudent = studentRepository.findById(studentId);
+
+        if(existingStudent.isPresent()){
+            Student dbStudent = existingStudent.get();
+            Optional<Course> existingCourse = courseRepository.findById(courseId);
+
+            if(existingCourse.isPresent()){
+                Course dbCourse = existingCourse.get();
+                if(dbCourse.getStudents().contains(dbStudent)){
+                    dbCourse.getStudents().remove(dbStudent);
+                    dbStudent.getCourses().remove(dbCourse);
+
+                    courseRepository.save(dbCourse);
+                    studentRepository.save(dbStudent);
+
+                    return "Disenrolled Successfully";
+                }
+            }
+            throw new EntityNotFound("Course not found");
+        }
+        throw new EntityNotFound("Student not found");
     }
 }

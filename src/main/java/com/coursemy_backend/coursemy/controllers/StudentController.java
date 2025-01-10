@@ -55,4 +55,10 @@ public class StudentController {
     public String deleteStudent(@PathVariable long id){
         return studentService.removeById(id);
     }
+
+    @DeleteMapping("/courses/{courseId}/enroll/{studentId}")
+    public String deleteEnrollment(@PathVariable long courseId, @PathVariable long studentId){
+        return studentService.removeEnrollment(courseId, studentId);
+    }
+
 }
