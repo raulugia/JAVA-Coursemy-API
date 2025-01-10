@@ -131,6 +131,14 @@ public class StudentServiceImp implements StudentService{
             if(student.getEmail() != null){
                 dbStudent.setEmail(student.getEmail());
             }
+            if(student.getPassword() != null){
+                if(!validatePassword(student.getPassword())){
+                    throw new IllegalArgumentException("Password must be 6-20 characters long, contain at least one uppercase letter, and at least one lowercase letter.");
+                }
+
+                String password = passwordEncoder.encode(dbStudent.getPassword());
+                dbStudent.setPassword(password);
+            }
 
             Student updatedStudent = studentRepository.save(dbStudent);
             return new StudentDTO(updatedStudent.getId(), updatedStudent.getFirstName(), updatedStudent.getLastName(), updatedStudent.getEmail());
