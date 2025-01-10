@@ -22,7 +22,7 @@ public class SecurityConfiguration {
                                     .requestMatchers(HttpMethod.POST,"/api/teachers", "/api/students").permitAll()
 
                                     //Requests to create, update and delete a course - Teacher role
-                                    .requestMatchers(HttpMethod.POST, "/api/courses/*").hasRole("TEACHER")
+                                    .requestMatchers(HttpMethod.POST, "/api/courses").hasRole("TEACHER")
                                     .requestMatchers(HttpMethod.PUT, "/api/courses/*").hasRole("TEACHER")
                                     .requestMatchers(HttpMethod.DELETE, "/api/courses/*").hasRole("TEACHER")
 
