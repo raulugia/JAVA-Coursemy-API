@@ -50,4 +50,14 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(response);
     }
+
+    @ExceptionHandler(PasswordValidationException.class)
+    public ResponseEntity<Map<String, Object>> handlePasswordValidationException(PasswordValidationException ex){
+        Map<String, Object> response = new HashMap<>();
+        response.put("timestamp", System.currentTimeMillis());
+        response.put("status", HttpStatus.BAD_REQUEST.value());
+        response.put("error", ex.getMessage());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
 }

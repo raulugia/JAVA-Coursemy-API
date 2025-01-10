@@ -5,7 +5,6 @@ import com.coursemy_backend.coursemy.dto.StudentDTO;
 import com.coursemy_backend.coursemy.dto.TeacherDTO;
 import com.coursemy_backend.coursemy.entities.Course;
 import com.coursemy_backend.coursemy.entities.Student;
-import com.coursemy_backend.coursemy.entities.Teacher;
 import com.coursemy_backend.coursemy.exception.EntityNotFound;
 import com.coursemy_backend.coursemy.repository.CourseRepository;
 import com.coursemy_backend.coursemy.repository.StudentRepository;
@@ -96,7 +95,7 @@ public class StudentServiceImp implements StudentService{
         }
 
         Optional<Course> existingCourse = courseRepository.findById(courseId);
-        if(!existingCourse.isPresent()){
+        if(existingCourse.isEmpty()){
             throw new EntityNotFound("Course not found");
         }
 
@@ -155,7 +154,7 @@ public class StudentServiceImp implements StudentService{
             studentRepository.deleteById(id);
             return "Student deleted successfully";
         }
-        return "Error";
+        throw new EntityNotFound("Student not found");
     }
 
     @Override

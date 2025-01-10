@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import java.util.List;
 
 public class TeacherDTO {
-    @JsonView(Views.Detailed.class)
+    @JsonView(Views.Basic.class)
     private long id;
 
     @JsonView(Views.Basic.class)

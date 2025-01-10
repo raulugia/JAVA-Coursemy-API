@@ -3,7 +3,6 @@ package com.coursemy_backend.coursemy.controllers;
 import com.coursemy_backend.coursemy.dto.CourseDTO;
 import com.coursemy_backend.coursemy.dto.StudentDTO;
 import com.coursemy_backend.coursemy.entities.Student;
-import com.coursemy_backend.coursemy.exception.EntityNotFound;
 import com.coursemy_backend.coursemy.service.StudentService;
 import com.coursemy_backend.coursemy.views.Views;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -41,6 +40,7 @@ public class StudentController {
     }
 
     @PostMapping("/students")
+    @JsonView(Views.Detailed.class)
     public StudentDTO createStudent(@Valid @RequestBody Student student){
         return studentService.createStudent(student);
     }

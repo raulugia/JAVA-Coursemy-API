@@ -5,6 +5,7 @@ import com.coursemy_backend.coursemy.dto.TeacherDTO;
 import com.coursemy_backend.coursemy.entities.Course;
 import com.coursemy_backend.coursemy.entities.Teacher;
 import com.coursemy_backend.coursemy.exception.EntityNotFound;
+import com.coursemy_backend.coursemy.exception.PasswordValidationException;
 import com.coursemy_backend.coursemy.repository.CourseRepository;
 import com.coursemy_backend.coursemy.repository.TeacherRepository;
 import jakarta.transaction.Transactional;
@@ -20,13 +21,11 @@ import java.util.stream.Collectors;
 public class TeacherServiceImp implements TeacherService {
     private TeacherRepository teacherRepository;
     private PasswordEncoder passwordEncoder;
-    private CourseRepository courseRepository;
 
     @Autowired
-    public TeacherServiceImp(TeacherRepository teacherRepository, PasswordEncoder passwordEncoder, CourseRepository courseRepository){
+    public TeacherServiceImp(TeacherRepository teacherRepository, PasswordEncoder passwordEncoder){
         this.teacherRepository = teacherRepository;
         this.passwordEncoder = passwordEncoder;
-        this.courseRepository = courseRepository;
     }
 
     @Transactional
@@ -59,7 +58,7 @@ public class TeacherServiceImp implements TeacherService {
 
         if(existingTeacher.isPresent()){
             Teacher dbTeacher = existingTeacher.get();
-            List<Course> teacherCourses = courseRepository.findByTeacherId(id);
+            List<Course> teacherCourses = dbTeacher.getCourses();
 
             if(!teacherCourses.isEmpty()){
                 List<CourseForTeacherDTO> courses = teacherCourses.stream()
@@ -77,7 +76,7 @@ public class TeacherServiceImp implements TeacherService {
     @Override
     public TeacherDTO createTeacher(Teacher teacher){
         if(!verifyPassword(teacher.getPassword())){
-            throw new IllegalArgumentException("Password must be 6-20 characters long, contain at least one uppercase letter, and at least one lowercase letter.");
+            throw new PasswordValidationException();
         }
 
         String encodedPassword = passwordEncoder.encode(teacher.getPassword());

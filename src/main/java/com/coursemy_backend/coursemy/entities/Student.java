@@ -37,7 +37,7 @@ public class Student {
     private String password;
 
     @Column(name = "role")
-    private String role;
+    private String role = "ROLE_STUDENT";
 
     public Student(){
 
@@ -51,7 +51,7 @@ public class Student {
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.role = "STUDENT";
+        this.role = "ROLE_STUDENT";
     }
 
     public long getId(){

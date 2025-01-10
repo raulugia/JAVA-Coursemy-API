@@ -40,7 +40,7 @@ public class Teacher {
     private String password;
 
     @Column(name = "role")
-    private String role;
+    private String role = "ROLE_TEACHER";
 
 
     @OneToMany(mappedBy = "teacher", fetch=FetchType.LAZY, cascade={CascadeType.REMOVE})
@@ -55,7 +55,7 @@ public class Teacher {
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.role = "TEACHER";
+        this.role = "ROLE_TEACHER";
     }
 
     public long getId(){
