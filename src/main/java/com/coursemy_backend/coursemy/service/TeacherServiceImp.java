@@ -75,7 +75,7 @@ public class TeacherServiceImp implements TeacherService {
 
     @Transactional
     @Override
-    public Teacher createTeacher(Teacher teacher){
+    public TeacherDTO createTeacher(Teacher teacher){
         if(!verifyPassword(teacher.getPassword())){
             throw new IllegalArgumentException("Password must be 6-20 characters long, contain at least one uppercase letter, and at least one lowercase letter.");
         }
@@ -83,7 +83,9 @@ public class TeacherServiceImp implements TeacherService {
         String encodedPassword = passwordEncoder.encode(teacher.getPassword());
         teacher.setPassword(encodedPassword);
 
-        return teacherRepository.save(teacher);
+        Teacher dbTeacher = teacherRepository.save(teacher);
+
+        return new TeacherDTO(dbTeacher.getId(), dbTeacher.getFirstName(), dbTeacher.getLastName(), dbTeacher.getEmail());
     }
 
     public boolean verifyPassword(String password){

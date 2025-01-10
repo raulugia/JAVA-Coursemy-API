@@ -14,7 +14,7 @@ public interface TeacherService {
 
     TeacherDTO getTeacherCourses(long id);
 
-    Teacher createTeacher(Teacher teacher);
+    TeacherDTO createTeacher(Teacher teacher);
 
     Teacher updateTeacher(long id, Teacher teacher);
 

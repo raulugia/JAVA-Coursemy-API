@@ -5,6 +5,8 @@ import com.coursemy_backend.coursemy.entities.Course;
 import com.coursemy_backend.coursemy.entities.Teacher;
 import com.coursemy_backend.coursemy.service.CourseService;
 import com.coursemy_backend.coursemy.service.TeacherService;
+import com.coursemy_backend.coursemy.views.Views;
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +26,7 @@ public class CourseController {
     }
 
     @GetMapping("/courses")
+    @JsonView(Views.Basic.class)
     public List<CourseDTO> findAll(){
         return courseService.getAllCourses();
     }

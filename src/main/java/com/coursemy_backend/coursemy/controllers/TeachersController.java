@@ -42,7 +42,8 @@ public class TeachersController {
     }
 
     @PostMapping("/teachers")
-    public Teacher createTeacher(@Valid @RequestBody Teacher teacher){
+    @JsonView(Views.Detailed.class)
+    public TeacherDTO createTeacher(@Valid @RequestBody Teacher teacher){
         return teacherService.createTeacher(teacher);
     }
 
