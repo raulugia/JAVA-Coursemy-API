@@ -1,6 +1,7 @@
 package com.coursemy_backend.coursemy.dto;
 
 import com.coursemy_backend.coursemy.views.Views;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public class TeacherDTO {
     private String email;
 
     @JsonView(Views.Basic.class)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<CourseForTeacherDTO> courses;
 
     public TeacherDTO(long id, String firstName, String lastName){

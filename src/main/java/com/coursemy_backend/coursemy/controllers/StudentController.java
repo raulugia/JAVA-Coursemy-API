@@ -1,5 +1,6 @@
 package com.coursemy_backend.coursemy.controllers;
 
+import com.coursemy_backend.coursemy.dto.CourseDTO;
 import com.coursemy_backend.coursemy.dto.StudentDTO;
 import com.coursemy_backend.coursemy.entities.Student;
 import com.coursemy_backend.coursemy.exception.EntityNotFound;
@@ -34,6 +35,12 @@ public class StudentController {
             throw new EntityNotFound("Student not found");
         }
         return studentService.getById(id);
+    }
+
+    @GetMapping("/students/{id}/courses")
+    @JsonView(Views.Basic.class)
+    public List<CourseDTO> getStudentCourses(@PathVariable long id){
+        return studentService.getStudentCourses(id);
     }
 
     @PostMapping("/students")

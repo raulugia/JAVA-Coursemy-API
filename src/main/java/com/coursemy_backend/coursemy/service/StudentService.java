@@ -1,5 +1,6 @@
 package com.coursemy_backend.coursemy.service;
 
+import com.coursemy_backend.coursemy.dto.CourseDTO;
 import com.coursemy_backend.coursemy.dto.StudentDTO;
 import com.coursemy_backend.coursemy.entities.Student;
 
@@ -9,6 +10,8 @@ public interface StudentService {
     List<StudentDTO> getAllStudents();
 
     StudentDTO getById(long id);
+
+    List<CourseDTO> getStudentCourses(long id);
 
     Student createStudent(Student student);
 

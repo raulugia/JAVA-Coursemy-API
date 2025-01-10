@@ -1,8 +1,11 @@
 package com.coursemy_backend.coursemy.service;
 
+import com.coursemy_backend.coursemy.dto.CourseDTO;
 import com.coursemy_backend.coursemy.dto.StudentDTO;
+import com.coursemy_backend.coursemy.dto.TeacherDTO;
 import com.coursemy_backend.coursemy.entities.Course;
 import com.coursemy_backend.coursemy.entities.Student;
+import com.coursemy_backend.coursemy.entities.Teacher;
 import com.coursemy_backend.coursemy.exception.EntityNotFound;
 import com.coursemy_backend.coursemy.repository.CourseRepository;
 import com.coursemy_backend.coursemy.repository.StudentRepository;
@@ -37,6 +40,7 @@ public class StudentServiceImp implements StudentService{
     }
 
     @Override
+    @Transactional
     public StudentDTO getById(long id) {
         Optional<Student> student = studentRepository.findById(id);
 
@@ -45,6 +49,22 @@ public class StudentServiceImp implements StudentService{
             return new StudentDTO(dbStudent.getId(), dbStudent.getFirstName(), dbStudent.getLastName());
         }
         throw  new EntityNotFound("Student not found");
+    }
+
+    @Override
+    @Transactional
+    public List<CourseDTO> getStudentCourses(long id){
+        Optional<Student> existingStudent = studentRepository.findById(id);
+
+        if(existingStudent.isPresent()){
+            Student dbStudent = existingStudent.get();
+
+            return dbStudent.getCourses().stream()
+                    .map(course -> new CourseDTO(course.getName(), course.getDescription(), course.getImageUrl(), new TeacherDTO(course.getTeacher().getId(), course.getTeacher().getFirstName(), course.getTeacher().getLastName())))
+                    .collect(Collectors.toList());
+        }
+
+        throw new EntityNotFound("Student not found");
     }
 
     @Transactional
